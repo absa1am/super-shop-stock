@@ -10,11 +10,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class SupplierController {
 
     @Autowired
     private SupplierService supplierService;
+
+    @GetMapping("/suppliers")
+    public String index(Model model) {
+        List<Supplier> suppliers = supplierService.getAll();
+
+        model.addAttribute("suppliers", suppliers);
+
+        return "suppliers";
+    }
 
     @GetMapping("/supplier/create")
     public String create(Model model) {
