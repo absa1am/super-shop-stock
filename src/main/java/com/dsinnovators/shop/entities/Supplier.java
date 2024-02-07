@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "suppliers")
@@ -12,9 +14,14 @@ public class Supplier {
     @Id
     @GeneratedValue
     private Long id;
+    @NotBlank(message = "Name can not be empty")
     private String name;
+    @NotBlank(message = "Phone number can not be empty")
     private String phone;
+    @Email(message = "Email is not valid")
+    @NotBlank(message = "Email can not be empty")
     private String email;
+    @NotBlank(message = "Address can not be empty")
     private String address;
 
     public Long getId() {

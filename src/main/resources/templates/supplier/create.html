@@ -5,33 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Create Supplier - DSi Super Shop</title>
 
-        <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-        <link th:href="@{/css/dashboard.css}" rel="stylesheet">
-        <link rel="canonical" th:href="@{https://getbootstrap.com/docs/5.0/examples/dashboard/}">
-
-        <style>
-            .bd-placeholder-img {
-                font-size: 1.125rem;
-                text-anchor: middle;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                user-select: none;
-            }
-
-            @media (min-width: 768px) {
-                .bd-placeholder-img-lg {
-                    font-size: 3.5rem;
-                }
-            }
-        </style>
-
+        <div th:replace="~{layouts/styles :: #styles}"></div>
     </head>
     <body>
-        <div th:replace="layouts/header :: header"></div>
+        <div th:replace="~{layouts/header :: header}"></div>
 
         <div class="container-fluid">
             <div class="row">
-                <div th:replace="layouts/nav :: nav"></div>
+                <div th:replace="~{layouts/nav :: nav}"></div>
 
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -42,18 +23,22 @@
                             <div class="form-group col-md-6">
                                 <label for="name">Name</label>
                                 <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Supplier name...">
+                                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-6 mt-2">
                                 <label for="phone">Phone</label>
                                 <input type="number" th:field="*{phone}" class="form-control" id="phone" placeholder="Supplier phone...">
+                                <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-6 mt-2">
                                 <label for="email">Email</label>
                                 <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="Supplier email...">
+                                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-6 mt-2">
                                 <label for="address">Address</label>
                                 <input type="text" th:field="*{address}" class="form-control" id="address" placeholder="Supplier address...">
+                                <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="text-danger"></span>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary mt-2">Create</button>
@@ -62,9 +47,6 @@
             </div>
         </div>
 
-        <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-        <script th:src="@{/js/dashboard.js}"></script>
-        <script th:src="@{https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js}"></script>
-        <script th:src="@{https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js}"></script>
+        <div th:replace="~{layouts/scripts :: #scripts}"></div>
     </body>
 </html>
