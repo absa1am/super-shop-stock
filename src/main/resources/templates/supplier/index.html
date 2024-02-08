@@ -37,7 +37,11 @@
                                 <td th:text="${supplier.phone}"></td>
                                 <td th:text="${supplier.email}"></td>
                                 <td th:text="${supplier.address}"></td>
-                                <td>Edit Delete View</td>
+                                <td>
+                                    <a th:href="@{/supplier/{id}/update(id=${supplier.id})}"><i class="bi bi-pencil-square"></i></a>
+                                    <a href="#"><i class="bi bi-eye"></i></a>
+                                    <a href="#" onclick="deleteTableRow(this)" th:data-route-param="supplier" th:data-row-id="${supplier.id}"><i class="bi bi-trash"></i></a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -46,5 +50,6 @@
         </div>
 
         <div th:replace="~{layouts/scripts :: #scripts}"></div>
+        <script th:src="@{/js/deleteRow.js}"></script>
     </body>
 </html>

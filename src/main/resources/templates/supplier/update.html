@@ -1,9 +1,9 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" lang="">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Create Supplier - DSi Super Shop</title>
+        <title>Update Supplier - DSi Super Shop</title>
 
         <div th:replace="~{layouts/styles :: #styles}"></div>
     </head>
@@ -16,9 +16,9 @@
 
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Create Supplier</h1>
+                        <h1 class="h2">Update Supplier</h1>
                     </div>
-                    <form th:action="@{/supplier/create}" th:object="${supplier}" th:method="post">
+                    <form th:action="@{/supplier/{id}/update(id=${supplier.id})}" th:object="${supplier}" th:method="post">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="name">Name</label>
@@ -41,7 +41,7 @@
                                 <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="text-danger"></span>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary mt-2">Create</button>
+                        <button type="submit" class="btn btn-primary mt-2">Update</button>
                     </form>
                 </main>
             </div>
