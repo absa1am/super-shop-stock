@@ -1,0 +1,30 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Dashboard - DSi Super Shop</title>
+
+        <div th:replace="~{layouts/styles :: #styles}"></div>
+    </head>
+    <body>
+    
+        <div th:replace="~{layouts/header :: header}"></div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div th:replace="~{layouts/nav :: nav}"></div>
+
+                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Dashboard</h1>
+                    </div>
+
+                    <h1>Welcome to homepage</h1>
+                </main>
+            </div>
+        </div>
+
+        <div th:replace="~{layouts/scripts :: #scripts}"></div>
+    </body>
+</html>

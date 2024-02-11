@@ -1,0 +1,55 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Suppliers - DSi Super Shop</title>
+
+        <div th:replace="~{layouts/styles :: #styles}"></div>
+
+    </head>
+    <body>
+        <div th:replace="~{layouts/header :: header}"></div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div th:replace="~{layouts/nav :: nav}"></div>
+
+                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Suppliers</h1>
+                    </div>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="supplier : ${suppliers}">
+                                <td th:text="${supplier.id}"></td>
+                                <td th:text="${supplier.name}"></td>
+                                <td th:text="${supplier.phone}"></td>
+                                <td th:text="${supplier.email}"></td>
+                                <td th:text="${supplier.address}"></td>
+                                <td>
+                                    <a th:href="@{/supplier/{id}/update(id=${supplier.id})}"><i class="bi bi-pencil-square"></i></a>
+                                    <a href="#"><i class="bi bi-eye"></i></a>
+                                    <a href="#" onclick="deleteTableRow(this)" th:data-route-param="supplier" th:data-row-id="${supplier.id}"><i class="bi bi-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </main>
+            </div>
+        </div>
+
+        <div th:replace="~{layouts/scripts :: #scripts}"></div>
+        <script th:src="@{/js/deleteRow.js}"></script>
+    </body>
+</html>
