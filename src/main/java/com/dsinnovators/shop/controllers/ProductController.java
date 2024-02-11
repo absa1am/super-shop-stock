@@ -22,6 +22,13 @@ public class ProductController {
         this.supplierService = supplierService;
     }
 
+    @GetMapping("/product")
+    public String index(Model model) {
+        model.addAttribute("products", productService.getProducts());
+
+        return "product/index";
+    }
+
     @GetMapping("/product/create")
     public String create(Model model) {
         model.addAttribute("product", new Product());
