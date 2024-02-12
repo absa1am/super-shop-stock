@@ -12,9 +12,10 @@ public class Product {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(unique = true)
     @NotBlank(message = "Name can not be empty")
     private String name;
-    @NotBlank(message = "Description")
+    @NotBlank(message = "Description can not be empty")
     private String description;
     @NotNull(message = "Purchase price can not be empty")
     @PositiveOrZero(message = "Purchase price can not be negative")
