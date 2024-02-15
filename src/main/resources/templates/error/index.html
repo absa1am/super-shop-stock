@@ -2,9 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Server Error</title>
+        <title>Error - DSi Super Shop</title>
+        <div th:replace="~{layouts/styles :: #styles}"></div>
     </head>
     <body>
-        <h1>Sorry, something went wrong!</h1>
+        <div class="d-flex flex-column justify-content-center align-items-center mt-lg-5">
+            <h1 class="text-danger">404</h1>
+            <p>Sorry, we can not process your request</p>
+            <a th:href="@{/}" class="btn btn-primary">Go Back</a>
+        </div>
     </body>
 </html>
