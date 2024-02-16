@@ -31,7 +31,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="supplier : ${suppliers}">
+                            <tr th:each="supplier : ${suppliers.content}">
                                 <td th:text="${supplier.id}"></td>
                                 <td th:text="${supplier.name}"></td>
                                 <td th:text="${supplier.phone}"></td>
@@ -47,16 +47,18 @@
                     </table>
                     <div aria-label="page">
                         <ul class="pagination justify-content-center">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
+                            <li class="page-item" th:classappend="${currentPage <= 0}? 'disabled'">
+                                <a class="page-link" th:href="@{/supplier(page=${currentPage - 1})}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
+                            <div th:each="page : ${#numbers.sequence(0, suppliers.totalPages - 1)}">
+                                <li class="page-item" th:classappend="${currentPage == page}? 'active'">
+                                    <a class="page-link" th:href="@{/supplier(page=${page})}" th:text="${page + 1}"></a>
+                                </li>
+                            </div>
+                            <li class="page-item" th:classappend="${currentPage >= totalPages}? 'disabled'">
+                                <a class="page-link" th:href="@{/supplier(page=${currentPage + 1})}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>

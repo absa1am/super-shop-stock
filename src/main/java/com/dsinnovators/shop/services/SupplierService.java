@@ -3,6 +3,8 @@ package com.dsinnovators.shop.services;
 import com.dsinnovators.shop.entities.Supplier;
 import com.dsinnovators.shop.repositories.SupplierRepository;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
@@ -20,6 +22,10 @@ public class SupplierService {
 
     public List<Supplier> getSuppliers() {
         return supplierRepository.findAllByIsDeletedIsFalse();
+    }
+
+    public Page<Supplier> getSuppliers(int page) {
+        return supplierRepository.findAllByIsDeletedIsFalse(PageRequest.of(page, 4));
     }
 
     public Optional<Supplier> getSupplier(Long id) {

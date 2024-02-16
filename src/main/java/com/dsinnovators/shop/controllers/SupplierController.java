@@ -3,13 +3,11 @@ package com.dsinnovators.shop.controllers;
 import com.dsinnovators.shop.entities.Supplier;
 import com.dsinnovators.shop.services.SupplierService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,12 +22,17 @@ public class SupplierController {
     }
 
     @GetMapping("/supplier")
-    public String index(Model model) {
-        List<Supplier> suppliers = supplierService.getSuppliers();
+    public String index(Model model, @RequestParam(defaultValue = "0") int page) {
+        if (page < 0) {
+            return "error/index";
+        }
 
+        Page<Supplier> suppliers = supplierService.getSuppliers(page);
+
+        model.addAttribute("currentPage", page);
         model.addAttribute("suppliers", suppliers);
 
-        return "/supplier/index";
+        return "supplier/index";
     }
 
     @GetMapping("/supplier/create")
