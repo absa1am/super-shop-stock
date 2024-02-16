@@ -3,6 +3,8 @@ package com.dsinnovators.shop.services;
 import com.dsinnovators.shop.entities.Product;
 import com.dsinnovators.shop.repositories.ProductRepository;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
@@ -21,6 +23,10 @@ public class ProductService {
 
     public List<Product> getProducts() {
         return productRepository.findAll();
+    }
+
+    public Page<Product> getProducts(int page) {
+        return productRepository.findAll(PageRequest.of(page, 4));
     }
 
     public Optional<Product> getProduct(Long id) {
