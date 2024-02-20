@@ -1,10 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
     <head>
-        <meta charset="UTF-8">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Create Invoice - DSi Super Shop</title>
+
+        <div th:replace="~{layouts/styles :: #styles}"></div>
     </head>
     <body>
+        <div th:replace="~{layouts/header :: #header}"></div>
 
+        <div class="container-fluid">
+            <div class="row">
+                <div th:replace="~{layouts/nav :: #nav}"></div>
+
+                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Create Invoice</h1>
+                    </div>
+                    <form th:action="@{/invoice/create}" th:object="${invoice}" th:method="post">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="customerName">Customer Name</label>
+                                <input type="text" th:field="*{customerName}" class="form-control" id="customerName" placeholder="Customer name...">
+                            </div>
+
+                            <table class="table" id="productTable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Product Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <select class="form-control" th:field="*{products}">
+                                                <th:block th:each="product : ${products}">
+                                                    <option th:value="${product.id}" th:text="${product.name}"></option>
+                                                </th:block>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" name="products[0].price">
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="products[0].quantity">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" name="products[0].total" readonly>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger" onclick="removeProduct(this)">Remove</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary mt-2">Create</button>
+                            <button type="button" class="btn btn-primary mt-2" th:onclick="addProduct()">+</button>
+                        </div>
+
+                    </form>
+                </main>
+            </div>
+        </div>
+
+        <div th:replace="~{layouts/scripts :: #scripts}"></div>
+
+        <script>
+            let rowCount = 1;
+
+            function addProduct() {
+                var productTable = document.getElementById('productTable');
+                var productTableBody = productTable.getElementsByTagName('tbody')[0];
+                var productTableRow = productTable.insertRow(productTable.rows.length);
+
+                productTableRow.innerHTML =
+                    `<td><input type="text" class="form-control" name="products[${rowCount}].productName" required></td>
+                    <td><input type="text" class="form-control" name="products[${rowCount}].price" required></td>
+                    <td><input type="number" class="form-control" name="products[${rowCount}].quantity" required></td>
+                    <td><input type="text" class="form-control" name="products[${rowCount}].total" readonly></td>
+                    <td><button type="button" class="btn btn-danger" onclick="removeProduct(this)">Remove</button></td>`;
+            }
+
+            function removeProduct(button) {
+                var productTableRow = button.parentNode.parentNode;
+                var productTableBody = productTableRow.parentNode;
+
+                productTableBody.removeChild(productTableRow);
+            }
+        </script>
     </body>
 </html>
