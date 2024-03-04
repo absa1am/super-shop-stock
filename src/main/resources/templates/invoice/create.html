@@ -72,20 +72,39 @@
 
         <div th:replace="~{layouts/scripts :: #scripts}"></div>
 
-        <script>
-            let rowCount = 1;
-
+        <script th:inline="javascript">
             function addProduct() {
                 var productTable = document.getElementById('productTable');
                 var productTableBody = productTable.getElementsByTagName('tbody')[0];
                 var productTableRow = productTable.insertRow(productTable.rows.length);
 
-                productTableRow.innerHTML =
-                    `<td><input type="text" class="form-control" name="products[${rowCount}].productName" required></td>
-                    <td><input type="text" class="form-control" name="products[${rowCount}].price" required></td>
-                    <td><input type="number" class="form-control" name="products[${rowCount}].quantity" required></td>
-                    <td><input type="text" class="form-control" name="products[${rowCount}].total" readonly></td>
-                    <td><button type="button" class="btn btn-danger" onclick="removeProduct(this)">Remove</button></td>`;
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '/products', true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            var products = JSON.parse(xhr.responseText);
+                            var dropdownHtml = '';
+                            products.forEach(function(product) {
+                                dropdownHtml += `<option value="${product.id}">${product.name}</option>`;
+                            });
+
+                            productTableRow.innerHTML =
+                                `<td>
+                                    <select class="form-control" name="products[${productTableBody.childElementCount}].productId" required>
+                                        ${dropdownHtml}
+                                    </select>
+                                </td>
+                                <td><input type="text" class="form-control" name="products[${productTableBody.childElementCount}].price" required></td>
+                                <td><input type="number" class="form-control" name="products[${productTableBody.childElementCount}].quantity" required></td>
+                                <td><input type="text" class="form-control" name="products[${productTableBody.childElementCount}].total" readonly></td>
+                                <td><button type="button" class="btn btn-danger" onclick="removeProduct(this)">Remove</button></td>`;
+                        } else {
+                            console.error('Error fetching products:', xhr.status);
+                        }
+                    }
+                };
+                xhr.send();
             }
 
             function removeProduct(button) {
@@ -95,5 +114,6 @@
                 productTableBody.removeChild(productTableRow);
             }
         </script>
+
     </body>
 </html>
